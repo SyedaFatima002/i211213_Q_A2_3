@@ -1,0 +1,33 @@
+{
+  "name": "i211213_q_a2_3",
+  "version": "1.0.0",
+  "description": "Web enginerring blogging backend development",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SyedaFatima002/Web_BloggingAppBackend_i21123.git"
+  },
+  "keywords": [
+    "backend",
+    "express",
+    "blogging"
+  ],
+  "author": "Syeda Fatima",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SyedaFatima002/Web_BloggingAppBackend_i21123/issues"
+  },
+  "homepage": "https://github.com/SyedaFatima002/Web_BloggingAppBackend_i21123#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.0",
+    "nodemon": "^3.0.1"
+  }
+}
