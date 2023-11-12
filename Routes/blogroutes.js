@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { AuthenticateUser } = require('../authenticate');
-const Blog = require('../models/Blog'); 
-const User = require('../models/User'); 
+const Blog = require('../models/blog.schema'); 
+const User = require('../models/User.schema'); 
 
 // Create a blog
-router.post('/post', AuthenticateUser, async (req, res) => {
+router.post('/post', async (req, res) => {
   try {
     const { title, content, blogId } = req.body;
     const username = req.username; 

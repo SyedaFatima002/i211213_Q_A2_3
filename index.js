@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const Userrouter = require("./Routes/userroutes");
 const Blogrouter = require("./Routes/blogroutes");
+const Adminrouter = require("./Routes/adminroutes");
 require("dotenv").config()
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors({
 
 app.use("/user" ,  Userrouter)
 app.use("/user/blog" , Blogrouter)
+app.use("/admin/" , Adminrouter)
 
 // Connect to your MongoDB database
 mongoose.connect(process.env.mongodbString).then(()=>{
