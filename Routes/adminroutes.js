@@ -4,8 +4,21 @@ const { AuthenticateAdmin } = require('../authenticateadmin');
 const Blog = require('../models/blog.schema');
 const User = require('../models/User.schema');
 
+router.post('/login', async(req, res)=>{
+    try {
+    const { username, password } = req.body;
+    if (username!="admin" || password!=1234) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+    const token = jwt.sign({ username: "admin", role: "admin" }, process.env.SECRET_KEY , { expiresIn: '24h' });
+    res.json({ token, username: "admin", role: "admin" });
+  } catch (error) {
+    res.status(500).json({ error: 'Login failed' });
+  }
+})
+
 // Create a user by admin
-router.post('/createuser', AuthenticateAdmin(), async (req, res) => {
+router.post('/createuser', async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
 
@@ -20,7 +33,7 @@ router.post('/createuser', AuthenticateAdmin(), async (req, res) => {
 });
 
 // Delete a user by admin
-router.delete('/deleteusers/:username', AuthenticateAdmin(), async (req, res) => {
+router.delete('/deleteusers/:username',  async (req, res) => {
   try {
     const userId = req.params.username;
 
@@ -38,7 +51,7 @@ router.delete('/deleteusers/:username', AuthenticateAdmin(), async (req, res) =>
 });
 
 // Create a blog by admin
-router.post('/createblogs', AuthenticateAdmin(), async (req, res) => {
+router.post('/createblogs', async (req, res) => {
   try {
     const { title, content, authorId } = req.body;
 
@@ -53,7 +66,7 @@ router.post('/createblogs', AuthenticateAdmin(), async (req, res) => {
 });
 
 // Delete a blog by admin
-router.delete('/admin/blogs/:blogId', AuthenticateAdmin(), async (req, res) => {
+router.delete('/admin/blogs/:blogId', async (req, res) => {
   try {
     const blogId = req.params.blogId;
 
@@ -72,7 +85,7 @@ router.delete('/admin/blogs/:blogId', AuthenticateAdmin(), async (req, res) => {
 
 
 // View all users by admin
-router.get('/viewusers', AuthenticateAdmin(), async (req, res) => {
+router.get('/viewusers', async (req, res) => {
     try {
       const users = await User.find();
       res.status(200).json(users);
@@ -83,7 +96,7 @@ router.get('/viewusers', AuthenticateAdmin(), async (req, res) => {
   });
   
   // View a particular user by admin
-  router.get('/viewuser/:username', AuthenticateAdmin(), async (req, res) => {
+  router.get('/viewuser/:username',  async (req, res) => {
     try {
       const userId = req.params.username;
       const user = await User.findById(userId);
@@ -100,7 +113,7 @@ router.get('/viewusers', AuthenticateAdmin(), async (req, res) => {
   });
   
   // View all blogs by admin
-  router.get('/viewblogs', AuthenticateAdmin(), async (req, res) => {
+  router.get('/viewblogs', async (req, res) => {
     try {
       const blogs = await Blog.find().populate('author', 'username');
       res.status(200).json(blogs);
@@ -111,7 +124,7 @@ router.get('/viewusers', AuthenticateAdmin(), async (req, res) => {
   });
   
   // View a particular blog by admin
-  router.get('/viewblog/:blogId', AuthenticateAdmin(), async (req, res) => {
+  router.get('/viewblog/:blogId', async (req, res) => {
     try {
       const blogId = req.params.blogId;
       const blog = await Blog.findById(blogId).populate('author', 'username');

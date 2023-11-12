@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User.schema');
+const Blog = require('../models/blog.schema');
 
 // User registration endpoint
 let register =  async (req, res) => {
@@ -51,6 +52,31 @@ let getprofile= async (req, res) => {
       res.status(500).json({ error: 'Error fetching user profile' });
     }
   }
+
+  let getfeed = async (req, res) => {
+    try {
+      const username = req.params.username;
+      const user = await User.findOne({ username: username });
+  
+      if (!user) {
+        return res.status(401).json({ error: 'Invalid user' });
+      }
+  
+      let following = user.following;
+      let feed = []; // Initialize feed array
+  
+      following.forEach(async (element) => {
+        const blogs = await Blog.find({ author: element });
+        feed.push(...blogs);
+      });
+  
+      return res.status(200).json(feed);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error fetching user profile' });
+    }
+  };
+  
   
 let updateprofile= async (req, res) => {
     try {
@@ -208,4 +234,5 @@ module.exports = {
   addfollowing,
   removefollower,
   removefollowing,
+  getfeed
 }

@@ -5,7 +5,7 @@ const Blog = require('../models/blog.schema');
 const User = require('../models/User.schema'); 
 
 // Create a blog
-router.post('/post', async (req, res) => {
+router.post('/createblog', async (req, res) => {
   try {
     const { title, content, blogId } = req.body;
     const username = req.username; 
@@ -67,7 +67,7 @@ router.get('/get/:username', async(req, res)=>{
 })
 
 // Update a blog
-router.put('/update/:blogId', AuthenticateUser, async (req, res) => {
+router.put('/updateblog/:blogId', async (req, res) => {
   try {
     const blogId = req.params.blogId;
     const { title, content } = req.body;
@@ -90,7 +90,7 @@ router.put('/update/:blogId', AuthenticateUser, async (req, res) => {
 });
 
 // Delete a blog
-router.delete('/delete/:blogId', AuthenticateUser, async (req, res) => {
+router.delete('/delete/:blogId', async (req, res) => {
   try {
     const blogId = req.params.blogId;
 

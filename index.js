@@ -17,8 +17,8 @@ app.use(cors({
 }))
 
 app.use("/user" ,  Userrouter)
-app.use("/user/blog" , Blogrouter)
-app.use("/admin/" , Adminrouter)
+app.use("/blog" , Blogrouter)
+app.use("/admin" , Adminrouter)
 
 // Connect to your MongoDB database
 mongoose.connect(process.env.mongodbString).then(()=>{
