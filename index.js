@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Userrouter = require("./Routes/userroutes");
+const Blogrouter = require("./Routes/blogroutes");
 require("dotenv").config()
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors({
 }))
 
 app.use("/user" ,  Userrouter)
+app.use("/user/blog" , Blogrouter)
 
 // Connect to your MongoDB database
 mongoose.connect(process.env.mongodbString).then(()=>{
